@@ -1,0 +1,1 @@
+./renderDisk.sh main.s
