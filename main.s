@@ -1,5 +1,7 @@
 *=0x500    ;set offset to 0x500
 
+!src "memory_macros.s"
+
 clc        ;clear carry flag
 xce        ;set emulation flag
 rep #$30   ;set to 16bit mode
@@ -24,6 +26,8 @@ sep #$30    ;switch to 8bit mode
 
 jmp .main
 
+!src "memory.s"
+!src "stream_io.s"
 !src "terminal.s"
 !src "tokenizer.s"
 
@@ -32,6 +36,7 @@ jmp .main
 .main
 
 	jsr .reset_display
+	jsr .memory_init
 
 .cursorloop
 	jsr .getch
@@ -40,6 +45,11 @@ jmp .cursorloop
 
 stp
 
+.code_segment_end
+
+!src "memory_statics.s"
 !src "terminal_statics.s"
+
+.data_segment_end
 
 !fi 128, $00 ;fill disk with 0's to make the disk at least 128bytes
